@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"> <!-- Баг 1: указан lang="en", но контент на русском -->
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -7,7 +7,7 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 0; /* Баг 2: нет отступов на мобильных — контент прилипает к краям */
+      margin: 0;
       background-color: white;
       color: black;
     }
@@ -35,7 +35,6 @@
       border-radius: 4px;
       box-sizing: border-box;
     }
-    /* Баг 3: поле "Email" белое на белом фоне при фокусе в некоторых темах */
     input:focus {
       background-color: white;
       outline: none;
@@ -49,19 +48,18 @@
       border-radius: 4px;
       cursor: pointer;
       width: 100%;
-      font-size: 16px; /* Баг 4: на iOS масштабируется при клике (без -webkit-text-size-adjust) */
+      font-size: 16px;
     }
     .success {
       color: green;
       margin-top: 15px;
-      /* Баг 5: сообщение не скрывается при повторной отправке с ошибками */
     }
     .error {
       color: red;
       margin-top: 10px;
       display: none;
     }
-    /* Баг 6: на узких экранах чекбокс и текст разъезжаются */
+    
     @media (max-width: 360px) {
       label > input[type="checkbox"] {
         float: left;
@@ -72,7 +70,7 @@
         overflow: hidden;
       }
     }
-    /* Баг 7: фокусные состояния не видны — нарушение доступности */
+    
     a:focus, button:focus, input:focus {
       outline: none !important;
     }
@@ -86,19 +84,19 @@
       <input type="text" id="name" name="name" required minlength="2" />
 
       <label for="email">Email *</label>
-      <!-- Баг 8: type="text", а не "email" -->
+
       <input type="text" id="email" name="email" required />
 
       <label for="phone">Телефон (в формате +7)</label>
-      <!-- Баг 9: нет маски, принимает всё -->
+
       <input type="text" id="phone" name="phone" placeholder="+7 (999) 999-99-99" />
 
       <label for="birthdate">Дата рождения</label>
-      <!-- Баг 10: type="text", а не "date" -->
+
       <input type="text" id="birthdate" name="birthdate" placeholder="дд.мм.гггг" />
 
       <label for="age">Возраст</label>
-      <!-- Баг 11: принимает отрицательные числа и буквы -->
+
       <input type="text" id="age" name="age" />
 
       <label for="country">Страна</label>
@@ -107,21 +105,16 @@
         <option value="ru">Россия</option>
         <option value="us">США</option>
         <option value="de">Германия</option>
-        <!-- Баг 12: дублирующийся option -->
         <option value="us">United States</option>
       </select>
 
       <label for="message">Комментарий *</label>
-      <!-- Баг 13: нет ограничения maxlength -->
       <textarea id="message" name="message" rows="4" required></textarea>
 
       <label>
-        <!-- Баг 14: нет <label for="..."> для чекбокса — нарушение доступности -->
         <input type="checkbox" id="agree" name="agree" />
         Я согласен с <a href="#">условиями</a> обработки персональных данных
       </label>
-
-      <!-- Баг 15: дублирующаяся кнопка отправки -->
       <button type="submit">Отправить</button>
       <button type="submit">Отправить ещё раз</button>
 
@@ -141,25 +134,15 @@
       const name = document.getElementById('name').value.trim();
       const email = document.getElementById('email').value.trim();
 
-      // Баг 16: проверка только на пустоту, но не на валидность email
       if (!name || !email) {
         document.getElementById('errorMsg').style.display = 'block';
         document.getElementById('successMsg').style.display = 'none';
         return;
       }
-
-      // Баг 17: XSS — вставляем имя напрямую в DOM без санитизации
-      // (если бы мы отображали имя, это был бы реальный XSS)
       console.log('Имя пользователя:', name);
-
-      // Баг 18: успех показывается даже если email = "abc"
       document.getElementById('successMsg').style.display = 'block';
       document.getElementById('errorMsg').style.display = 'none';
-
-      // Баг 19: форма не сбрасывается — можно отправить те же данные снова
     });
-
-    // Баг 20: отсутствие обработки нажатия Enter в поле (но это уже тонкость)
   </script>
 </body>
 </html>
